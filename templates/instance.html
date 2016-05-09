@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block body %}
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-header">
+                <h2>Instance: {{ instance['InstanceId'] }} ({{ instance['Tags'][0]['Value'] }})</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                {% include "instance_actions.html" %}
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                      <td>Instance ID</td>
+                      <td>{{ instance['InstanceId'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Instance State</td>
+                      <td>{{ instance['State']['Name'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Private DNS</td>
+                      <td>{{ instance['PrivateDnsName'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Private IPs</td>
+                      <td>
+                      {% for network_interface in instance['NetworkInterfaces'] %}
+                      <div class="list-group">
+                        <h5 class="list-group-item-heading">{{ network_interface['NetworkInterfaceId'] }}</h5>
+                        {% for private_ip_address in network_interface['PrivateIpAddresses'] %}
+                        <span class="label label-default">{{ private_ip_address['PrivateIpAddress'] }}</span><br />
+                        {% endfor %}
+                      </div>
+                      {% endfor %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>VPC ID</td>
+                      <td>{{ instance['VpcId'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Subnet ID</td>
+                      <td>{{ instance['SubnetId'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Network interfaces</td>
+                      <td>
+                        {% for network_interface in instance['NetworkInterfaces'] %}
+                          <span class="label label-default">eth{{ network_interface['Attachment']['DeviceIndex']}}</span>
+                        {% endfor %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Source/dest. check</td>
+                      <td>{{ instance['SourceDestCheck'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>EBS-optimized</td>
+                      <td>{{ instance['EbsOptimized'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Root device type</td>
+                      <td>{{ instance['RootDeviceType'] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Root device</td>
+                      <td><span class="label label-default">{{ instance['RootDeviceName'] }}</span></td>
+                    </tr>
+                    <tr>
+                      <td>Block devices</td>
+                      <td>
+                        {% for block_device_mapping in instance['BlockDeviceMappings'] %}
+                          <span class="label label-default">{{ block_device_mapping['DeviceName'] }}</span>
+                        {% endfor %}
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <div class="col-sm-6">
+            <table class="table table-striped table-hover">
+                <tbody>
+                  <tr>
+                    <td>Public DNS</td>
+                    <td>{{ instance['PublicDnsName'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Public IP</td>
+                    <td>{{ instance['PublicIpAddress'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Elastic IP</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Availability Zone</td>
+                    <td>{{ instance['Placement']['AvailabilityZone'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Security Groups</td>
+                    <td>
+                      {% for sg in instance['SecurityGroups'] %}
+                      <span class="label label-default">{{ sg['GroupName'] }}</span>
+                      {% endfor%}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Scheduled Events</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>AMI ID</td>
+                    <td>{{ instance['ImageId'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Platform</td>
+                    <td>{{ instance['Platform'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>IAM role</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Key pair name</td>
+                    <td>{{ instance['KeyName'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Owner</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Launch time</td>
+                    <td>{{ instance['LaunchTime'].strftime("%B %d, %y at %I:%M:%S %p") }}</td>
+                  </tr>
+                  <tr>
+                    <td>Termination protection</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Lifecycle</td>
+                    <td>{{ instance['InstanceLifecycle'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Monitoring</td>
+                    <td>{{ instance['Monitoring']['State'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Alarm status</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Kernel ID</td>
+                    <td>{{ instance['KernelId'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>RAM disk ID</td>
+                    <td>{{ instance['RamdiskId'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Placement group</td>
+                    <td>{{ instance['Placement']['GroupName'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Virtualization</td>
+                    <td>{{ instance['VirtualizationType'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Reservation</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>AMI launch index</td>
+                    <td>{{ instance['AmiLaunchIndex'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Tenancy</td>
+                    <td>{{ instance['Placement']['Tenancy'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Host ID</td>
+                    <td>{{ instance['Placement']['HostId'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>Affinity</td>
+                    <td>{{ instance['Placement']['Affinity'] }}</td>
+                  </tr>
+                  <tr>
+                    <td>State transition reason</td>
+                    <td>{{ instance['StateTransitionReason'] }}</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+{% endblock %}

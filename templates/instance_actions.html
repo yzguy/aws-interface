@@ -1,0 +1,51 @@
+               <a href="/instance/view/{{ instance['InstanceId'] }}">
+                  <button type="button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search" />
+                  </button>
+                </a>
+                {% if instance['State']['Name'] == 'running' %}
+                <a href="/instance/stop/{{ instance['InstanceId'] }}">
+                  <button type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-stop" />
+                  </button>
+                </a>
+                {% elif instance['State']['Name'] == 'stopped' %}
+                <a href="/instance/start/{{ instance['InstanceId'] }}">
+                  <button type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-play" />
+                  </button>
+                </a>
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#{{ instance['InstanceId'] }}_termination"><span class="glyphicon glyphicon-remove" /></button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="{{ instance['InstanceId'] }}_termination" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirm Termination</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure you want to terminate the following instance: {{ instance['InstanceId'] }}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="/instance/terminate/{{ instance['InstanceId'] }}">
+                          <button type="button" class="btn btn-success">Yes</button>
+                        </a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                {% elif instance['State']['Name'] == 'terminated' %}
+                {% else %}
+                <a href="#">
+                  <button type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-time" />
+                  </button>
+                </a>
+                {% endif %}

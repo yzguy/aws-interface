@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block body %}
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-header">
+                <h2>Create Instance</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Choose an AMI</div>
+                  <div class="panel-body">
+                    {% for image in images %}
+                    <button type="button" class="btn btn-primary btn-lg">{{ amis.get(image['ImageId']) }}</button>
+                      <!--
+                      <div style="border: 1px solid #ddd; padding: 1px; width: 150px; border-radius: 5px;">
+                          <img style="display: block; margin: auto;" src="{{ url_for('static', filename='images/{}'.format(amis.get(image['ImageId']))) }}.jpg" />
+                      </div>
+                      -->
+                    {% endfor %}
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-11">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Choose a Size</div>
+                    <div class="panel-body">
+                        {% for size in size_mappings %}
+                        <a class="btn btn-primary btn-lg">
+                            {{ size['tshirt'] }}<br />
+                            <small>
+                            Type: {{ size['size'] }}<br />
+                            CPU(s): {{ size['cpu'] }}<br />
+                            RAM: {{ size['ram'] }} GB<br />
+                            Disk: {{ size['disk'] }} GB           
+                            </small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Add your SSH Keys</div>
+                    <div class="panel-body">
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="true">Yes</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Finalize and Create</div>
+                    <div class="panel-body">
+                        <div class="form-group col-xs-4">
+                            <label for="hostname">Hostname:</label>
+                            <input type="text" class="form-control" name="hostname" id="hostname">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success">Create</button>
+            </div>
+            <div class="col-sm-10">
+            </div>
+        </div>
+        <br /><br />
+
+{% endblock %}
